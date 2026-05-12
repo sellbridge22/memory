@@ -1,0 +1,55 @@
+{
+  "tasks": [
+    {
+      "id": "20260512032100-ju98",
+      "title": "CD Bar: 레벨별 HEX 코드, Decay Rate, Easing Curve 적용 여부 확인.",
+      "description": "자동 등록 (Designer 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "designer"
+      ],
+      "createdAt": "2026-05-12T03:21:00.160Z",
+      "status": "done",
+      "sessionDir": "2026-05-12T03-11",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-12T03-11/_report.md\n- Designer: CD Bar 및 CWG에 대한 '최종 개발 사양서(Final Dev Spec Sheet)'를 최종적으로 검토하고, 애니메이션 키프레임 좌표, H\n- Editor: 최종화된 Mini-Module '시간대별 제작 실행 로드맵(Timecode Production Roadmap)'을 개발팀에게 전달하여, 디자인 \n- Developer: Designer와 Editor가 제공한 '최종 개발 사양서'와 '시간대별 로드맵'을 기반으로, Mini-Module의 핵심 기능을 구현하는 통합\n\nCEO 종합 요점: ## 🗂 작업 라운드 — 누가 뭐 했나\n\n### 🎨 Designer _(Lead Designer)_\n> 📋 **지시**: CD Bar 및 CWG에 대한 '최종 개발 사양서(Final Dev Spec Sheet)'를 최종적으로 검토하고, 애니메이션 키프레임 좌표, HEX 색상 코드, 트리거 시간/강도 값 등 개발자가 코딩할 수 있는 모든 요소를 재확인하",
+      "completedAt": "2026-05-12T03:34:05.546Z"
+    },
+    {
+      "id": "20260512032100-on2o",
+      "title": "CWG: Red 상태에서의 '속도 가속/급락' 로직 구현 필수.",
+      "description": "자동 등록 (Designer 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "designer"
+      ],
+      "createdAt": "2026-05-12T03:21:00.209Z",
+      "status": "done",
+      "sessionDir": "2026-05-12T03-11",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-12T03-11/_report.md\n- Designer: CD Bar 및 CWG에 대한 '최종 개발 사양서(Final Dev Spec Sheet)'를 최종적으로 검토하고, 애니메이션 키프레임 좌표, H\n- Editor: 최종화된 Mini-Module '시간대별 제작 실행 로드맵(Timecode Production Roadmap)'을 개발팀에게 전달하여, 디자인 \n- Developer: Designer와 Editor가 제공한 '최종 개발 사양서'와 '시간대별 로드맵'을 기반으로, Mini-Module의 핵심 기능을 구현하는 통합\n\nCEO 종합 요점: ## 🗂 작업 라운드 — 누가 뭐 했나\n\n### 🎨 Designer _(Lead Designer)_\n> 📋 **지시**: CD Bar 및 CWG에 대한 '최종 개발 사양서(Final Dev Spec Sheet)'를 최종적으로 검토하고, 애니메이션 키프레임 좌표, HEX 색상 코드, 트리거 시간/강도 값 등 개발자가 코딩할 수 있는 모든 요소를 재확인하",
+      "completedAt": "2026-05-12T03:34:05.616Z"
+    },
+    {
+      "id": "20260512032100-z5o5",
+      "title": "Trigger: Yellow $\\rightarrow$ Orange $\\rightarrow$ Red로의 **상태 변화 시마다** 글리치 + 떨림(Jitter)을 0.1~0.2초간 의무적으로 삽입할 것.",
+      "description": "자동 등록 (Designer 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "designer"
+      ],
+      "createdAt": "2026-05-12T03:21:00.228Z",
+      "status": "done",
+      "sessionDir": "2026-05-12T03-11",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-12T03-11/_report.md\n- Designer: CD Bar 및 CWG에 대한 '최종 개발 사양서(Final Dev Spec Sheet)'를 최종적으로 검토하고, 애니메이션 키프레임 좌표, H\n- Editor: 최종화된 Mini-Module '시간대별 제작 실행 로드맵(Timecode Production Roadmap)'을 개발팀에게 전달하여, 디자인 \n- Developer: Designer와 Editor가 제공한 '최종 개발 사양서'와 '시간대별 로드맵'을 기반으로, Mini-Module의 핵심 기능을 구현하는 통합\n\nCEO 종합 요점: ## 🗂 작업 라운드 — 누가 뭐 했나\n\n### 🎨 Designer _(Lead Designer)_\n> 📋 **지시**: CD Bar 및 CWG에 대한 '최종 개발 사양서(Final Dev Spec Sheet)'를 최종적으로 검토하고, 애니메이션 키프레임 좌표, HEX 색상 코드, 트리거 시간/강도 값 등 개발자가 코딩할 수 있는 모든 요소를 재확인하",
+      "completedAt": "2026-05-12T03:34:05.681Z"
+    }
+  ]
+}
