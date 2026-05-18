@@ -94,3 +94,7 @@ _사용자가 직접 줄을 지우면 그 주장은 다시 미검증 상태로 �
 - [2026-05-18] | **Secondary Info** | Cyan Blue (`#00FFFF`) | 시스템 데이터, 정상적 정보 표시 색상. 대비 효과 극대화. | | _(근거: sessions/2026-05-17)_
 - [2026-05-18] | **폰트 계열** | Monospace / OCR Style (예: Orbitron, VT323) | 기술적 권위와 시스템 메시지 느낌 강조. | | _(근거: sessions/2026-05-07T05:40)_
 - [2026-05-18] | **핵심 애니메이션** | Glitch Stutter Filter | 짧고 강렬한 노이즈 폭발(Noise Burst). 네온 레드+사이언 블루 톤의 패턴. | | _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-18] | **배경색** | `#030612` (Deep Black / Near Black). 깊고 어두운 배경으로 몰입도 극대화. | | _(근거: sessions/2026-05-18T12:06)_
+- [2026-05-18] | **Primary Color** | **Neon Red:** `#FF0033`. 경고, 위험, 오류 메시지 (Critical Alert). | | _(근거: sessions/2026-05-07T05:40)_
+- [2026-05-18] | **Secondary Color** | **Cyber Cyan:** `#00FFFF`. 정상 데이터 흐름, 시스템 상태 정보 (Information Display). | | _(근거: sessions/2026-05-13T14:15)_
+- [2026-05-18] | **글리치 패턴** | 노이즈 필터(Noise Filter), 색상 채널 분리(Chromatic Aberration) 효과를 모든 텍스트와 배경에 미세하게 적용하여 '시스템적 결함'을 암시합니다. | | _(근거: sessions/2026-05-13T13:45)_
