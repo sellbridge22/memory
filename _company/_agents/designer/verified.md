@@ -188,3 +188,8 @@ _사용자가 직접 줄을 지우면 그 주장은 다시 미검증 상태로 �
 - [2026-05-22] 1. **[SYSTEM OVERLOAD] Modal 등장:** 화면 중앙을 가득 채우며, "WARNING: Structural Defect Detected" 문구가 네온 레드(`FF0033`)로 8Hz 간격으로 깜빡인다. _(근거: sessions/2026-05-07T05:40)_
 - [2026-05-22] 2. **PFC Index Meter 등장:** 계기판 스타일의 지표가 중앙 하단에 나타나며, 임계점(Critical Level)을 넘어 **빨간 경고등이 점멸**한다. 이 수치는 불안정하게 미세하게 떨리는 애니메이션을 유지해야 한다. _(근거: sessions/2026-05-07T05:40)_
 - [2026-05-22] * **최종 CTA 모달:** `[SERVICE REQUIRED] Modal`이 화면 전체를 덮는다. 배경은 깊고 붉은 블랙이며, 중앙에 거대한 네온 레드 타이포그래피로 **'SYSTEM FAILURE (Solution Available)'**가 점멸하며 나타난다. 하단에는 "Professional Solution Access" 버튼을 배치한다. _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-22] * Headline/Alert: Monospace Sans-serif (예: IBM Plex Mono 또는 시스템 기본 고정폭 폰트). 대문자 사용 원칙. _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-22] | **Hover** | `btn--hover` | `#00DDFF` (옅은 Cyan) | `#FFFFFF` | 미세한 글리치 노이즈(Glitch Noise Filter)가 짧게 오버레이되어야 함. | _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-22] | **Active (Click)** | `btn--clicked` | `#FF0033` (Red Alert) | `#FFFFFF` | 클릭 시, 버튼 영역 전체가 네온 레드 플래시(8Hz 깜빡임)를 0.1초간 발생시킨 후, 재빨리 기본 상태로 복귀해야 함. | _(근거: sessions/2026-05-07T05:40)_
+- [2026-05-22] * **위치**: 화면 최상단 또는 최하단을 가로질러 루프 애니메이션. _(근거: sessions/2026-05-07T01:10)_
+- [2026-05-22] * **애니메이션**: 수치 변화는 절대 직선적이지 않으며, **미세하고 불규칙하게 떨리는(Jittering/Wobbling)** 애니메이션을 적용하여 불안정성을 극대화해야 합니다. _(근거: sessions/2026-05-07T05:40)_

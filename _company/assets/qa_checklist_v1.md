@@ -1,0 +1,1 @@
+# ⚙️ State Transition Button QA Checklist (Developer Level)
