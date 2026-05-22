@@ -161,3 +161,20 @@ _사용자가 직접 줄을 지우면 그 주장은 다시 미검증 상태로 �
 - [2026-05-21] 1. **Global Glitch Stutter:** 화면 전체에 **강한 글리치 필터**를 즉시 적용한다 (네온 레드/사이언 블루 노이즈 패턴 폭발). 지속 시간: 0.5초. (****) _(근거: sessions/2026-05-13T13:45)_
 - [2026-05-21] 2. **SYSTEM OVERLOAD Modal 발동:** 화면 중앙을 가득 채우며, **"WARNING: Structural Defect Detected"** 메시지가 네온 레드(`--color-alert: #FF0033`)로 깜빡인다 (Blink Rate 8Hz). (****) _(근거: sessions/2026-05-07T05:40)_
 - [2026-05-21] 2. **PFC Index Meter 폭주:** PFC Index Meter가 'Critical Level'에 도달하며, 네온 레드 경고등이 쉴 새 없이 점멸하고 주변 UI 요소들이 미세하게 떨리는(Shake) 애니메이션을 적용한다. (****) _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-22] * **발동 조건:** Context Drain Bar가 Critical에 도달하거나, PFC Index Meter가 임계점 초과 시 (``) _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-22] * **애니메이션:** 시작 시, **글리치 스터터(Glitch Stutter)** 필터를 강하게 적용하며 화면이 깨지는 듯한 효과로 진입합니다. (네온 레드/사이언 블루 노이즈 폭발) `` _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-22] * **메시지:** 중앙에 거대한 네온 레드 타이포그래피로 **`WARNING: Structural Defect Detected`**가 점멸합니다. (Blink Rate 8Hz) `` _(근거: sessions/2026-05-07T05:40)_
+- [2026-05-22] * **CTA 버튼:** 'Ultimate Plan' 접근 버튼은 네온 레드(`Primary_Alert`)로 강조하며, 주변에 보안 인증 마크(Shield Icon)를 배치하여 신뢰성을 극대화해야 합니다. `` _(근거: sessions/2026-05-21T19:54)_
+- [2026-05-22] *본 스펙은 , [근거: sessions/2026-05-07T05:40], [근거: sessions/2026-05-13T13:45], [근거: sessions/2026-05-13T07:56] 등 기존의 핵심 UX 원칙과 애니메이션 레퍼런스를 통합하여 재정비되었습니다.* _(근거: sessions/2026-05-07T01:10)_
+- [2026-05-22] 1. **진입 효과:** 모달이 나타나기 직전, 화면 전체에 **강한 글리치 스터터(Glitch Stutter)** 필터를 0.2초간 강하게 적용합니다. (네온 레드/사이언 블루 노이즈 폭발) _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-22] 2. **메인 경고창:** 모달 중앙에 **`SYSTEM OVERLOAD`** 타이포그래피가 네온 레드로 점멸(Blink Rate 8Hz)하며 나타납니다. _(근거: sessions/2026-05-13T09:41)_
+- [2026-05-22] | **Primary Alert (Danger)** | `--color-alert-primary` | `#FF0033` | 시스템 결함, 오류 발생 시 메인 경고색. (네온 레드) | | _(근거: sessions/2026-05-13T14:15)_
+- [2026-05-22] | **Secondary Info** | `--color-info-secondary` | `#00FFFF` | 데이터 흐름, 보조 정보 표시색. (사이언 블루) | | _(근거: sessions/2026-05-13T14:15)_
+- [2026-05-22] | **Background (Default)** | `--color-bg-base` | `#0A0E1C` | 메인 배경색. 깊고 어두운 산업적 느낌의 블랙. | | _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-22] | **Border/Divider** | `--color-border-default` | `rgba(0, 255, 255, 0.1)` | 컴포넌트 경계 및 구분선. 미세한 사이버틱 느낌 부여. | | _(근거: sessions/2026-05-07T05:40)_
+- [2026-05-22] | **Default** | Background: `#1A2038`, Text: `--color-info-secondary` | `:hover`: 배경이 미세하게 밝아지고(Luminosity increase), `box-shadow`로 사이언 블루 네온 아웃라인 추가. | | _(근거: sessions/2026-05-07T13:45)_
+- [2026-05-22] | **Critical (CTA)** | Background: `--color-alert-primary`, Text: `#FFFFFF` | 클릭 시 강렬한 네온 레드 플래시 애니메이션(Blink Rate 8Hz) 발생 후, 트랜지션 효과를 동반하여 다음 모달로 이동. | | _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-22] * **경고 임계치:** 30% 도달 시, 색상이 `--color-info-secondary`에서 `--color-alert-primary`로 점진적으로 변하며, 주변 그리드에 미세한 깜빡임(Flicker) 발생 (Amplitude Max). _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-22] * **애니메이션 로직:** 데이터 변화가 있을 때마다 수치가 부드럽게 올라가되, **미세하고 불규칙하게 떨리는 애니메이션(Jitter)**을 적용하여 심리적 불안감을 유도. Critical Level 도달 시, 네온 레드 경고등이 점멸하며 주변 UI에 진동 효과(`transform: translate(x, y)`)를 발생시킨다. _(근거: sessions/2026-05-07T05:40)_
+- [2026-05-22] * **스펙:** 화면 전체에 짧고 강렬한 노이즈 필터와 스터터링(Stuttering) 효과를 적용한다. 네온 레드/사이언 블루의 패턴이 폭발적으로 나타나며 (Duration: 0.1s), 다음 스테이지로 부드럽게 전환되기 전 시각적 충격을 극대화해야 한다. _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-22] * **스펙:** 화면 전체를 덮는 어둡고 붉은 배경(Deep Black/Red Gradient). 중앙에 거대한 네온 레드 타이포그래피로 **'WARNING: STRUCTURAL DEFECT DETECTED'**가 점멸하며 나타난다. 이 모달을 통해 유료 솔루션 접근 버튼(`[SERVICE REQUIRED] Modal`)으로의 자연스러운 흐름을 강제한다. _(근거: sessions/2026-05-07T05:40)_
