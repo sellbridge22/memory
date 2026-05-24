@@ -1,0 +1,96 @@
+/* 🚨 Selbridge Design System Spec 기반 스타일링 */
+:root {
+    --color-primary-red: #FF0033; /* Neon Red (CRITICAL) */
+    --color-secondary-cyan: #00FFFF; /* Cyan Bl... */
+    --color-background-dark: #111111;
+    --color-text-light: #E0E0E0;
+}
+
+body {
+    font-family: 'Consolas', monospace, sans-serif;
+    background-color: var(--color-background-dark);
+    color: var(--color-text-light);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* --- 시스템 알림/에러 컨셉 --- */
+.system-alert, .system-panel {
+    border: 3px solid var(--color-primary-red);
+    box-shadow: 0 0 15px rgba(255, 0, 51, 0.4);
+    padding: 60px 0;
+}
+
+/* --- CTA 버튼 스타일링 (State Transition의 기반) --- */
+.cta-button {
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+}
+
+/* Primary CTA (진단 시작) */
+.cta-primary {
+    background-color: var(--color-secondary-cyan);
+    color: #111111;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+/* Secondary CTA (보고서 받기) */
+.cta-secondary {
+    background-color: #333;
+    color: var(--color-text-light);
+    border: 1px solid var(--color-primary-red);
+}
+
+/* Critical CTA (구매 버튼 - 가장 중요) */
+.cta-critical {
+    background-color: var(--color-primary-red);
+    color: white;
+    font-size: 1.2em;
+    padding: 20px 40px;
+    box-shadow: 0 0 20px rgba(255, 0, 51, 0.8); /* 강한 빛 효과 */
+}
+
+/* --- State Transition Logic 시각화 (Hover/Active) --- */
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), 0 0 20px var(--color-primary-red);
+}
+
+/* 버튼이 비활성화된 상태 (System Error 시각화) */
+.cta-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    background-color: #3a1a20 !important; /* 어둡고 위험한 색상 */
+    box-shadow: none !important;
+}
+
+/* 결제 성공/실패 메시지 스타일링 */
+.payment-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.success {
+    background-color: rgba(0, 255, 0, 0.2);
+    border: 1px solid #00ff00;
+    color: #00ff00;
+}
+
+.failure {
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid var(--color-primary-red);
+    color: var(--color-primary-red);
+}

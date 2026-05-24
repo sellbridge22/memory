@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRITICAL ERROR | Selbridge - 시스템 구조적 결함 진단</title>
+    <link rel="stylesheet" href="./styles.css">
+    <!-- 폰트나 외부 라이브러리가 필요할 수 있으므로 주석 처리 -->
+</head>
+<body>
+
+    <!-- 1. 히어로 섹션: 긴급 상황 경고 유도 (Hero Section) -->
+    <section id="hero-section" class="system-alert">
+        <div class="container">
+            <h1>[CRITICAL ERROR] 시스템 구조적 결함 감지</h1>
+            <p class="subtitle">귀하의 현재 비즈니스 프로세스는 예측 가능한 지점(Predictable Point)에 갇혀 있습니다. 이대로는 지속 불가능합니다.</p>
+            <button id="start-diagnosis-btn" class="cta-button cta-primary">[무료 진단 시작] 시스템 로그 제출</button>
+        </div>
+    </section>
+
+    <!-- 2. 진단 결과 제시 섹션 (Diagnosis Result Area) -->
+    <section id="diagnosis-result-section" class="system-panel hidden">
+        <div class="container">
+            <h2>✅ [진단 완료] 구조적 취약점 보고서</h2>
+            <p>분석된 로그를 기반으로, 귀사의 문제는 단순한 '운영 비효율'이 아닌 **[핵심 구조적 결함: Adaptive Flow State Engine 부재]** 입니다.</p>
+            <div id="diagnosis-metrics">
+                <!-- 여기에 실제 진단 수치와 그래프가 들어갈 예정 -->
+                <div class="metric-box">지속 가능성 지수: <span class="score low">32%</span></div>
+                <div class="metric-box">최대 병목 구간: <span class="error">[프로세스 A $\rightarrow$ B] 연동 실패</span></div>
+            </div>
+
+            <!-- ⭐ 핵심 로직 구현 영역: 상태 변화 버튼 -->
+            <button id="upgrade-btn" class="cta-button cta-secondary initial-state">
+                [진단 결과 분석 보고서 받기] (무료)
+            </button>
+        </div>
+    </section>
+
+    <!-- 3. 가격/솔루션 제시 섹션 (Pricing / Upgrade Path) -->
+    <section id="pricing-section" class="system-panel hidden">
+        <div class="container">
+            <h2>⚙️ [패치 적용 필수] Selbridge Pro 패키지</h2>
+            <p class="warning-text">이 결함은 단순 개선으로 해결되지 않습니다. 시스템 근본 구조를 재설계하는 **[PRO 패치]** 가 필요합니다.</p>
+
+            <div class="pricing-grid">
+                <!-- 다른 티어들 (FREE, ENTERPRISE) ... -->
+
+                <div class="price-card featured-patch" id="pro-upgrade-card">
+                    <h3>✨ PRO 패키지</h3>
+                    <p class="subhead">시스템 구조적 결함 해결에 최적화</p>
+                    <p class="price">$19,900</p>
+                    <button id="purchase-btn" class="cta-button cta-critical">
+                        [PRO 패치 구매 및 적용] 🚀
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 스크립트 로드: 상태 변화 로직과 결제 모듈 테스트를 위한 JS -->
+    <script src="./scripts.js"></script>
+</body>
+</html>
