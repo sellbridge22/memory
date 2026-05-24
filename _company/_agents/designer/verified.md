@@ -212,3 +212,19 @@ _사용자가 직접 줄을 지우면 그 주장은 다시 미검증 상태로 �
 - [2026-05-24] 현재의 글리치 효과는 노이즈를 보여주지만, '시스템이 데이터를 처리하지 못하고 깨지는' 느낌을 주기에는 강도가 약합니다. `` _(근거: Self-RAG가 자가검증한 항목들)_
 - [2026-05-24] 이 두 가지는 이 모달의 '권위'를 부여하는 핵심 요소입니다. 현재 프로토타입에 포함되지 않았으므로, 반드시 추가해야 합니다. _(근거: Self-RAG가 자가검증한 항목들)_
 - [2026-05-24] 최종 결제 유도 단계(`[SERVICE REQUIRED] Modal`에 해당)에서는 공포감을 최고조로 끌어올려야 합니다. _(근거: Self-RAG가 자가검증한 항목들)_
+- [2026-05-24] | **트리거 시점** | `[SYSTEM OVERLOAD] Modal`이 화면에 띄워지는 순간 (T=0ms). | JavaScript Event Listener: `ModalMounted` 이벤트 감지 후 트리거. | | _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-24] | **글리치 오버레이** | 화면 전체에 노이즈와 데이터 왜곡 필터 적용. 네온 레드(`#FF0033`)와 사이언 블루(`#00FFFF`)의 위상 간섭 패턴 사용. | CSS Filter: `hue-rotate()` 및 `saturate()`를 빠르게 반복 변화시키는 애니메이션 적용. | | _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-24] | **강도 (Amplitude)** | **Max Amplitude**로 설정하며, 노이즈의 폭(Pixel Width)은 화면 해상도의 80% 이상을 커버해야 합니다. | CSS Transition: `opacity`와 `transform: skewX()`를 조합하여 짧게 진동시키는 패턴 사용. | | _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-24] | **깜빡임 주기 (Blink Rate)** | 글리치 효과 자체는 8Hz의 깜빡임을 기본으로 합니다. 여기에, 'WARNING' 타이포그래피에 추가적인 네온 레드 플래시를 적용합니다. | CSS Animation: `keyframes` 기반으로 강제 점멸(Stutter) 구현. Blink Interval: **7-9ms** (매우 빠름). | | _(근거: sessions/2026-05-03T09:41)_
+- [2026-05-24] | **활성화 트리거** | 사용자가 충분한 '불안감'을 인지하거나, Context Drain Bar가 임계치 이하로 떨어질 때 (T+15s 경과) 시스템이 자동으로 활성화합니다. | JavaScript Logic: `ContextDrainBar < 20%` 조건 충족 시 자동 상태 전이 강제 실행. | | _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-24] | **애니메이션 경로** | 비활성화 $\to$ 활성화는 단순 페이드인(Fade-in)가 아닌, **'시스템 부팅 사운드와 동기화된 급격한 색상 변화 및 크기 확대(Scale Up)'**를 사용합니다. | CSS Transition: `background-color` (Gray $\to$ Red), `transform: scale(0.9) -> scale(1.0)`을 **250ms** 동안 부드럽게 진행합니다. Easing Function은 `cubic-bezier(.25, 1, .5, 1)`를 사용하여 급격한 가속감을 부여합니다. | | _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-24] | **배치 및 타이포** | Modal의 최상단 또는 중앙 좌측에 고정 배치합니다. 폰트 크기는 본문 대비 최소 1.5배 이상으로 강조하며, 모노스페이스(Monospace) 폰트를 사용합니다 (예: IBM Plex Mono). | HTML Structure: `<div class="error-code">AUTH-STRUC</div>` 구조로 격리하여 배치. | | _(근거: sessions/2026-05-13T14:15)_
+- [2026-05-24] | **강압 효과** | 코드가 화면에 로드되는 순간, 텍스트가 네온 레드로 깜빡이며(Blink Rate 8Hz), 주변 그리드 시스템 전체에 미세한 떨림(`@keyframes shake`)을 유발합니다. | CSS Animation: `animation-delay`를 활용하여 글자 하나하나가 타이핑되듯 나타나도록 구현하는 것이 효과적입니다. | | _(근거: sessions/2026-05-03T09:41)_
+- [2026-05-24] | **색상 및 역할** | 색상은 경고 레벨을 나타내는 네온 레드(`FF0033`)를 사용하며, 이는 *결함의 근본 원인*임을 암시해야 합니다. 이 코드는 해결 불가능한 시스템적 오류처럼 보여야 합니다. | Color Code: `#FF0033` (Primary Alert). | | _(근거: sessions/2026-05-17T14:15)_
+- [2026-05-24] | Token Name | Hex Code | RGB Value | Purpose/Usage | | _(근거: sessions/2026-05-17T14:15)_
+- [2026-05-24] | `--color-primary-red` | `#FF0033` | (255, 0, 51) | **Primary Alert/Critical Failure.** [SYSTEM OVERLOAD] Modal 배경 및 강조 타이포그래피. | | _(근거: sessions/2026-05-13T14:15)_
+- [2026-05-24] | `--color-secondary-cyan` | `#00FFFF` | (0, 255, 255) | **Secondary Info/System Data.** Context Drain Bar의 초기값 및 데이터 표시. | | _(근거: sessions/2026-05-13T14:15)_
+- [2026-05-24] | `--color-background-dark` | `#0A0A18` | (10, 10, 24) | 기본 배경색. 깊고 기술적인 분위기 조성. | | _(근거: sessions/2026-05-13T07:56)_
+- [2026-05-24] | `--color-warning-glow` | `rgba(255, 0, 51, 0.4)` | (255, 0, 51) | 글리치 효과의 빛 번짐/오버레이. 투명도 필수. | | _(근거: sessions/2026-05-13T13:45)_
+- [2026-05-24] * **Primary Font:** `SF Mono`, `Roboto Mono`, monospace (System Fallback). ** _(근거: sessions/2026-05-13T14:15)_
+- [2026-05-24] *Self-RAG가 출력에서 `` 태그가 붙은 주장만 자동 승격해서 누적.* _(근거: ...)_
