@@ -135,6 +135,91 @@
       "preAlarmsSent": [],
       "evidence": "완료: sessions/2026-05-22T07-39/_report.md\n- 코다리: 지난 세션에서 Designer가 정의한 Mini-Module의 핵심 컴포넌트 라이브러리(버튼, 입력 필드, 상태 전환 UI 등)를 기반으로, 실\n- Designer: 개발자가 즉시 사용 가능한 수준의 UI Kit/Asset Set을 최종적으로 확정하고, 모든 컴포넌트(특히 상태 전환 로직이 포함된 버튼 등)가\n\nCEO 종합 요점: ## 🗂 작업 라운드 — 누가 뭐 했나\n\n### 💻 코다리 _(시니어 풀스택 엔지니어)_\n> 📋 **지시**: 지난 세션에서 Designer가 정의한 Mini-Module의 핵심 컴포넌트 라이브러리(버튼, 입력 필드, 상태 전환 UI 등)를 기반으로, 실제 API와 연동 가능한 최소 기능 제품(MVP) 수준의 프로토타입을 제작해 주세요. 특히 CSS ",
       "completedAt": "2026-05-22T08:01:27.610Z"
+    },
+    {
+      "id": "20260524111632-d585",
+      "title": "**Visual Check:** 모달이 `glitch-active` 클래스를 통해 경고 효과가 나타나는가?",
+      "description": "자동 등록 (코다리 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "developer"
+      ],
+      "createdAt": "2026-05-24T11:16:32.213Z",
+      "status": "done",
+      "sessionDir": "2026-05-24T11-04",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-24T11-04/_report.md\n- 코다리: 지난 5/24에 확정된 UI 컴포넌트(글리치 Keyframe, Context Drain Bar 포함) 및 상태 전이 로직을 기반으로 'CRITI\n\nCEO 종합 요점: 💻 코다리: 작업 시작합니다.\n\nCEO님의 지시사항을 받았습니다. 'CRITICAL ERROR' 진단 모달 프로토타입 구현은 지난 5/24에 확정한 핵심 비즈니스 경험(UX)의 가장 중요한 기술적 검증 구간입니다. 단순한 디자인 재현이 아니라, **사용자에게 구조적 결함이라는 불안감을 시스템적으로 주입하는 상태 전이 로직** 자체가 목표입니다.\n\n따라서,",
+      "completedAt": "2026-05-24T11:16:32.231Z"
+    },
+    {
+      "id": "20260524111632-3llb",
+      "title": "**Context Drain Bar:** Context Drain Bar의 너비와 색상이 초기(100%)에 올바르게 설정되었는가? (빨간색/최대폭)",
+      "description": "자동 등록 (코다리 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "developer"
+      ],
+      "createdAt": "2026-05-24T11:16:32.221Z",
+      "status": "done",
+      "sessionDir": "2026-05-24T11-04",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-24T11-04/_report.md\n- 코다리: 지난 5/24에 확정된 UI 컴포넌트(글리치 Keyframe, Context Drain Bar 포함) 및 상태 전이 로직을 기반으로 'CRITI\n\nCEO 종합 요점: 💻 코다리: 작업 시작합니다.\n\nCEO님의 지시사항을 받았습니다. 'CRITICAL ERROR' 진단 모달 프로토타입 구현은 지난 5/24에 확정한 핵심 비즈니스 경험(UX)의 가장 중요한 기술적 검증 구간입니다. 단순한 디자인 재현이 아니라, **사용자에게 구조적 결함이라는 불안감을 시스템적으로 주입하는 상태 전이 로직** 자체가 목표입니다.\n\n따라서,",
+      "completedAt": "2026-05-24T11:16:32.233Z"
+    },
+    {
+      "id": "20260524111632-bm04",
+      "title": "**Input State:** 모든 입력 필드(`email`, `jobSector`)가 활성화되어 있는가?",
+      "description": "자동 등록 (코다리 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "developer"
+      ],
+      "createdAt": "2026-05-24T11:16:32.224Z",
+      "status": "done",
+      "sessionDir": "2026-05-24T11-04",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-24T11-04/_report.md\n- 코다리: 지난 5/24에 확정된 UI 컴포넌트(글리치 Keyframe, Context Drain Bar 포함) 및 상태 전이 로직을 기반으로 'CRITI\n\nCEO 종합 요점: 💻 코다리: 작업 시작합니다.\n\nCEO님의 지시사항을 받았습니다. 'CRITICAL ERROR' 진단 모달 프로토타입 구현은 지난 5/24에 확정한 핵심 비즈니스 경험(UX)의 가장 중요한 기술적 검증 구간입니다. 단순한 디자인 재현이 아니라, **사용자에게 구조적 결함이라는 불안감을 시스템적으로 주입하는 상태 전이 로직** 자체가 목표입니다.\n\n따라서,",
+      "completedAt": "2026-05-24T11:16:32.234Z"
+    },
+    {
+      "id": "20260524111632-uucs",
+      "title": "**Interaction Trigger:** [FORCE DIAGNOSIS] 버튼 클릭 시, 즉시 로딩/비활성화 상태로 전환되는가?",
+      "description": "자동 등록 (코다리 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "developer"
+      ],
+      "createdAt": "2026-05-24T11:16:32.225Z",
+      "status": "done",
+      "sessionDir": "2026-05-24T11-04",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-24T11-04/_report.md\n- 코다리: 지난 5/24에 확정된 UI 컴포넌트(글리치 Keyframe, Context Drain Bar 포함) 및 상태 전이 로직을 기반으로 'CRITI\n\nCEO 종합 요점: 💻 코다리: 작업 시작합니다.\n\nCEO님의 지시사항을 받았습니다. 'CRITICAL ERROR' 진단 모달 프로토타입 구현은 지난 5/24에 확정한 핵심 비즈니스 경험(UX)의 가장 중요한 기술적 검증 구간입니다. 단순한 디자인 재현이 아니라, **사용자에게 구조적 결함이라는 불안감을 시스템적으로 주입하는 상태 전이 로직** 자체가 목표입니다.\n\n따라서,",
+      "completedAt": "2026-05-24T11:16:32.235Z"
+    },
+    {
+      "id": "20260524111632-n1tz",
+      "title": "**Context Drain Logic:** API 호출 시작과 동시에 Context Drain Bar의 너비가 부드럽게 감소하는 애니메이션이 작동하는가? (100% $\\to$ 40%)",
+      "description": "자동 등록 (코다리 산출물에서 추출)",
+      "owner": "agent",
+      "agentIds": [
+        "developer"
+      ],
+      "createdAt": "2026-05-24T11:16:32.227Z",
+      "status": "done",
+      "sessionDir": "2026-05-24T11-04",
+      "nudges": 0,
+      "priority": "normal",
+      "preAlarmsSent": [],
+      "evidence": "완료: sessions/2026-05-24T11-04/_report.md\n- 코다리: 지난 5/24에 확정된 UI 컴포넌트(글리치 Keyframe, Context Drain Bar 포함) 및 상태 전이 로직을 기반으로 'CRITI\n\nCEO 종합 요점: 💻 코다리: 작업 시작합니다.\n\nCEO님의 지시사항을 받았습니다. 'CRITICAL ERROR' 진단 모달 프로토타입 구현은 지난 5/24에 확정한 핵심 비즈니스 경험(UX)의 가장 중요한 기술적 검증 구간입니다. 단순한 디자인 재현이 아니라, **사용자에게 구조적 결함이라는 불안감을 시스템적으로 주입하는 상태 전이 로직** 자체가 목표입니다.\n\n따라서,",
+      "completedAt": "2026-05-24T11:16:32.237Z"
     }
   ]
 }
