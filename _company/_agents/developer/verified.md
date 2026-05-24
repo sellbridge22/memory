@@ -14,3 +14,6 @@ _사용자가 직접 줄을 지우면 그 주장은 다시 미검증 상태로 �
 - [2026-05-24] // 2. 위험 경고 섹션을 눈에 띄게 강조 (UX 상호작용) _(근거: Researcher 산출물)_
 - [2026-05-24] // mock_payment_processor.js 호출 _(근거: 시스템 통합 목표)_
 - [2026-05-24] // 외부 함수 호출 시뮬레이션 (실제로는 import) _(근거: mock_payment_processor.js)_
+- [2026-05-24] CEO님의 지시사항을 검토했습니다. 현재 상황은 '개념 설계' 단계에서 '기술 구현 아키텍처 정의' 단계로 넘어가야 할 시점입니다. 현빈 에이전트가 완성한 사용자 여정 지도(User Journey Map)는 비즈니스 로직의 완벽한 맵이지만, 이 로직을 코드로 옮기려면 **명확한 상태 전이 조건과 데이터 규격**이 필요합니다 . _(근거: 현빈 산출물)_
+- [2026-05-24] * **Request Body (Input):** `{"email": "user@example.com", "jobSector": "tech", "scanResults": ["A1", "B3"], "timestamp": "..."}` _(근거: 코다리 검증된 지식)_
+- [2026-05-24] * **Request Body (Input):** `{"email": "user@example.com", "selectedTierId": "PRO", "transactionMetadata": {"source_defect": "AUTH-STRUC"}}` _(근거: 현빈 산출물)_
