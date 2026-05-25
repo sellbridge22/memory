@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[SYSTEM ALERT] 구조적 결함 진단 시스템</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+    <!-- 전체 화면을 덮는 배경 효과 (선택 사항) -->
+    <div class="system-overlay"></div>
+
+    <!-- 핵심 모달 컴포넌트: 구조적 결함 진단 창 -->
+    <div id="defect-modal" class="modal hidden">
+        <div class="modal-header">
+            <h1>[SYSTEM ALERT]</h1>
+            <h2>시스템 무결성 경고</h2>
+            <p class="alert-code">[AUTH-STRUC]</p>
+        </div>
+
+        <!-- 진단 섹션 1: 기본 문제 제기 (T1) -->
+        <div id="section-t1" class="diagnosis-section active">
+            <h3>Phase I: 데이터 불일치 감지</h3>
+            <p>사용자님의 현재 시스템 로그에서 치명적인 구조적 오류가 발견되었습니다. 이는 단순한 개인 실수가 아닌, **시스템 아키텍처 레벨의 결함**입니다.</p>
+            <button id="btn-t1-to-t2" class="cta-button primary">원인 분석 심화 진단 시작</button>
+        </div>
+
+        <!-- 진단 섹션 2: 원인 분석 및 불안감 증폭 (T2) -->
+        <div id="section-t2" class="diagnosis-section hidden">
+            <h3>Phase II: 근본적 취약점 탐지</h3>
+            <p>시스템 깊숙한 곳에서 데이터 플로우가 비정상적으로 흐르고 있습니다. 이 오류는 시간이 지날수록 복잡도가 기하급수적으로 증가합니다.</p>
+            <div class="data-visualization">
+                <!-- 여기에 시각화된 그래프/흐름이 들어갈 자리 -->
+                [DATA FLOW VISUALIZATION REQUIRED] 📉
+            </div>
+            <button id="btn-t2-to-t3" class="cta-button secondary">결함 확정 및 솔루션 경로 요청</button>
+        </div>
+
+        <!-- 진단 섹션 3: 결함 확정 및 구매 유도 (T3) -->
+        <div id="section-t3" class="diagnosis-section hidden">
+            <h3>Phase III: 구조적 취약점 최종 확인</h3>
+            <p>확인 결과, 시스템은 임계치 이하의 안정성을 유지하고 있습니다. 이 문제를 해결하려면 **전문적인 패치가 필수**입니다.</p>
+
+            <!-- 티어링 구조 시각화 -->
+            <div class="pricing-grid">
+                <div class="tier basic">Basic (₩9,900)</div>
+                <div class="tier pro active-tier">PRO (₩19,900) <span class="label">⭐ 추천</span></div>
+                <div class="tier enterprise">ENTERPRISE (₩79,900+)</div>
+            </div>
+
+            <button id="btn-purchase" class="cta-button primary purchase-btn">지금 바로 시스템 복구 패키지 구매</button>
+        </div>
+    </div>
+
+    <script src="./src/script.js"></script>
+</body>
+</html>

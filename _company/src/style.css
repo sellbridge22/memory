@@ -1,0 +1,123 @@
+/* 💻 코다리: 글리치 및 경고 스타일링 작업 */
+
+body {
+    background-color: #0a0a15; /* Dark background for tech feel */
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #e6e6ff;
+}
+
+/* --- Modal 기본 스타일링 --- */
+.modal {
+    width: 90%;
+    max-width: 800px;
+    padding: 40px;
+    border: 3px solid #ff0033; /* Neon Red Border */
+    box-shadow: 0 0 25px rgba(255, 0, 51, 0.7);
+    background-color: rgba(10, 10, 21, 0.95);
+    position: relative;
+}
+
+.hidden { display: none !important; }
+
+/* --- 헤더 및 경고 코드 스타일링 --- */
+.modal-header h1 {
+    font-size: 3em;
+    color: #ff0033; /* Neon Red Primary Color */
+    text-shadow: 0 0 5px rgba(255, 0, 51, 0.8);
+}
+
+.alert-code {
+    font-size: 1.5em;
+    color: #ffff00; /* Warning Yellow for Code */
+    animation: glitch-flicker 0.1s infinite alternate; /* Glitch Effect */
+}
+
+/* --- 상태 전이 섹션 스타일링 --- */
+.diagnosis-section { margin-top: 30px; }
+h3 { color: #88aaff; border-bottom: 2px solid #ff0033; padding-bottom: 10px;}
+p { line-height: 1.6; }
+
+/* --- CTA 버튼 스타일링 --- */
+.cta-button {
+    padding: 15px 30px;
+    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+}
+
+.primary {
+    background-color: #ff0033; /* Neon Red */
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 0, 51, 0.6);
+}
+.primary:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* --- T3 Pricing Grid 스타일링 --- */
+.pricing-grid {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 0;
+    text-align: center;
+}
+.tier {
+    padding: 25px;
+    border: 2px solid #333;
+    flex: 1;
+    margin: 0 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.tier.pro {
+    border-color: #ffff00; /* Highlight PRO */
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.4);
+    background-color: rgba(30, 30, 50, 0.8);
+}
+
+/* =================================== */
+/*          ✨ 애니메이션 로직 (Keyframes) ✨          */
+/* =================================== */
+
+/* 1. 글리치 플리커 효과 (Warning Code) */
+@keyframes glitch-flicker {
+    0% { transform: translate(0); opacity: 1; }
+    20% { text-shadow: 2px 2px #ff0033, -2px -2px #ffff00; transform: translate(-2px, 2px); }
+    40% { text-shadow: -3px 3px #ff0033, 3px -3px #ffff00; opacity: 0.95; }
+    60% { transform: translate(1px, -1px); }
+    80% { transform: translate(-1px, 1px); text-shadow: none; }
+    100% { transform: translate(0); opacity: 1; }
+}
+
+/* 2. 시스템 경고 깜빡임 (Modal 전체) */
+@keyframes warning-blink {
+    0%, 100% { border-color: #ff0033; box-shadow: 0 0 25px rgba(255, 0, 51, 0.7); }
+    50% { border-color: #ffff00; box-shadow: 0 0 40px rgba(255, 255, 0, 0.9); opacity: 0.98; }
+}
+
+/* 초기 로딩 시 경고 애니메이션 적용 (JS에서 클래스 제어 예정) */
+.modal {
+    animation: warning-blink 1s infinite alternate;
+}
+
+/* T2 섹션 데이터 흐름 강조 효과 */
+@keyframes data-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.02); text-shadow: 0 0 10px rgba(136, 170, 255, 0.8); }
+}
+.data-visualization {
+    animation: data-pulse 4s infinite linear;
+    display: inline-block;
+    padding: 10px;
+    background-color: rgba(30, 30, 50, 0.5);
+    border: 1px dashed #88aaff;
+}
+
+</style>
