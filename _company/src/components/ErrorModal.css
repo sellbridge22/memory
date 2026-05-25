@@ -1,0 +1,109 @@
+/* ------------------------------------ */
+/* SYSTEM ALERT Modal Styles - Technical Authority Focus */
+/* ------------------------------------ */
+
+:root {
+    --neon-red: #FF0033; /* 핵심 경고 색상 */
+    --dark-bg: #1a1a2e;  /* 배경색 */
+    --text-color: #e0e0ff; /* 기본 텍스트 색상 */
+}
+
+.error-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* 어둡고 무거운 배경 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* 최상위 레이어 보장 */
+    color: var(--text-color);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+/* 활성화 시 스타일 변경 (이것이 '보이는' 순간입니다) */
+.error-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-header {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--neon-red);
+    letter-spacing: 3px;
+    /* 글리치 효과 적용 */
+    animation: glitch 1.5s infinite linear alternate;
+}
+
+.modal-body {
+    background-color: rgba(20, 20, 46, 0.8); /* 약간 더 밝은 어두운 배경 */
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 70%;
+    border: 2px solid var(--neon-red);
+    box-shadow: 0 0 15px rgba(255, 0, 51, 0.5), inset 0 0 8px rgba(255, 0, 51, 0.3);
+}
+
+/* 글리치 컨테이너는 애니메이션의 대상이 되는 요소입니다. */
+.glitch-container {
+    animation: glitch-effect 4s infinite steps(1) alternate;
+}
+
+.detail-warning {
+    color: #ffb300; /* 경고 강조 색상 (앰버/옐로우) */
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* CTA 버튼 스타일링 */
+.modal-actions button {
+    padding: 12px 30px;
+    font-size: 1.1em;
+    background-color: var(--neon-red);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.3s;
+    text-transform: uppercase;
+}
+
+.modal-actions button:hover:not([disabled]) {
+    background-color: #ff4d7e;
+    box-shadow: 0 0 20px var(--neon-red); /* 호버 시 빛 효과 */
+}
+
+.modal-actions button[disabled] {
+    background-color: #333;
+    cursor: not-allowed;
+}
+
+
+/* ==================== KEYFRAME ANIMATIONS (핵심) ==================== */
+
+/* 1. 글리치(Glitch) 효과 - 헤더에 적용되는 시각적 노이즈 */
+@keyframes glitch {
+    0% { transform: translate(-2px, 2px); text-shadow: 4px 4px var(--neon-red), -4px -4px #1a1a2e; }
+    30% { transform: translate(-2px, -2px); text-shadow: -2px 8px var(--neon-red), 2px -8px #1a1a2e; }
+    60% { transform: translate(2px, 2px); text-shadow: 4px -4px var(--neon-red), -4px 4px #1a1a2e; }
+    100% { transform: translate(-2px, -2px); text-shadow: -2px 8px var(--neon-red), 2px -8px #1a1a2e; }
+}
+
+/* 2. 글리치 컨테이너 효과 - 본문 내용에 적용되는 주기적인 진동 */
+@keyframes glitch-effect {
+    0% { transform: translate(1px, 1px); opacity: 0.98; filter: hue-rotate(0deg) contrast(100%); }
+    50% { transform: translate(-1px, -1px); opacity: 1; filter: hue-rotate(3deg) contrast(110%); }
+    100% { transform: translate(1px, 1px); opacity: 0.98; filter: hue-rotate(-3deg) contrast(100%); }
+}
+
+/* 추가: 모달이 활성화될 때의 부드러운 진입 효과 */
+.error-modal {
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 커브 조정으로 더 '시스템적'인 느낌 부여 */
+}
