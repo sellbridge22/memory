@@ -1,89 +1,53 @@
 /**
- * @fileoverview Payment Completion Controller for /api/v1/purchase-completion
- * Handles the final stage of the user funnel: payment and state transition.
- * Maintains the State Machine pattern by enforcing status updates.
+ * PaymentController.ts: API 엔드포인트 역할을 하며 요청을 받고 비즈니스 로직(Service)에 위임합니다.
  */
 
-import { Request, Response } from 'express';
-// 가정: 사용자 상태 관리를 담당하는 서비스가 존재함
-import { UserStateService } from '../services/userStateService'; 
-// 외부 결제 게이트웨이와의 통신을 모킹한 프로세서 (실제로는 import)
-import { mockPaymentProcessor } from '../../utils/mock_payment_processor';
+import { processSubscriptionUpgrade, checkDiagnosisScore } from '../services/SubscriptionService';
+
+// Mock Request Body Type
+interface RequestBody {
+    userId: string;
+    paymentToken: string; // 결제 성공 시 받는 토큰
+    sourceDefectCode: string; // AUTH-STRUC 등 구조적 오류 코드
+}
 
 /**
- * @typedef {object} PurchaseRequest
- * @property {string} email - 사용자 이메일 주소.
- * @property {('PRO'|'ENTERPRISE')} selectedTierId - 사용자가 선택한 티어 ID.
- * @property {number} paymentToken - 결제 게이트웨이에서 받은 토큰 (모킹용).
- * @property {string} source_defect - 이 구매가 해결하려는 핵심 시스템적 결함 코드 (예: AUTH-STRUC).
+ * 🚀 E2E 유료 전환 처리 엔드포인트 (POST /api/v1/convert)
+ * @param reqBody - 요청 바디 데이터
  */
-
-/**
- * POST /api/v1/purchase-completion
- * 사용자의 유료 패치 구매 완료를 처리하고, 시스템 상태 전이를 강제합니다.
- * @param {Request} req - Express 요청 객체.
- * @param {Response} res - Express 응답 객체.
- */
-export const handlePurchaseCompletion = async (req: Request, res: Response) => {
-    const { email, selectedTierId, paymentToken, source_defect } = req.body;
-
-    // 1. 입력 유효성 검증 및 필수 데이터 확인 (Safety Check!)
-    if (!email || !selectedTierId || !paymentToken || !source_defect) {
-        console.error("Payment completion request failed: Missing required fields.");
-        return res.status(400).json({ 
-            success: false, 
-            errorCode: "INPUT-VALIDATION-FAIL",
-            message: "필수 정보가 누락되었습니다. 다시 확인 후 진단해주세요." // 경고 톤 유지
-        });
-    }
-
-    console.log(`[DEBUG] Attempting purchase for ${email} at tier ${selectedTierId}...`);
+export const convertToPro = async (reqBody: RequestBody): Promise<{ success: boolean; message: string }> => {
+    console.log("\n--- [Controller] Received conversion request ---");
 
     try {
-        // 2. 결제 모킹 호출 (외부 API 통합 지점)
-        const paymentResult = await mockPaymentProcessor({ token: paymentToken, amount: selectedTierId === 'PRO' ? 19900 : 49900 });
+        // 1. 서비스 호출 및 트랜잭션 시작
+        const updatedUser = await processSubscriptionUpgrade(
+            reqBody.userId,
+            reqBody.paymentToken,
+            reqBody.sourceDefectCode
+        );
 
-        if (!paymentResult || !paymentResult.success) {
-            // 결제 실패 시나리오 처리 (상태 변화 없음)
-            console.warn(`[WARNING] Payment failed for ${email}: ${paymentResult?.message}`);
-            return res.status(503).json({ 
-                success: false, 
-                errorCode: "PAYMENT-FAIL",
-                message: `결제 시스템 오류 발생. (${paymentResult?.message}). 잠시 후 다시 시도해주세요.` // 구조적 문제로 포장
-            });
-        }
+        // 성공 시 응답 구조는 단순한 성공이 아닌 '시스템적 변화'를 강조해야 합니다.
+        return { 
+            success: true, 
+            message: `✅ 성공적으로 Pro 계정으로 승격되었습니다. 사용자 상태가 ${updatedUser.status}로 기록되었으며, 모든 권한을 복구했습니다.` 
+        };
 
-        // 3. 결제 성공 & 상태 전이 (State Machine Transition)
-        const newState = await UserStateService.updateUserStatus(email, selectedTierId, source_defect);
+    } catch (e) {
+        // 구조적 결함이나 결제 실패 시, 전문적인 오류 메시지를 반환합니다.
+        const error = e instanceof Error ? e : new Error("Unknown System Error");
+        console.error(`[Controller] ERROR: ${error.message}`);
 
-        if (!newState || !newState.isSuccess) {
-             // 내부 로직 오류 처리 (가장 위험한 시나리오)
-            console.error(`[CRITICAL] Failed to transition user state for ${email}.`);
-            return res.status(500).json({ 
-                success: false, 
-                errorCode: "INTERNAL-STATE-ERROR",
-                message: "서버 내부 오류가 감지되었습니다. 관리자에게 문의해주세요." 
-            });
-        }
-
-        // 성공 응답 (다음 단계 유도)
-        return res.status(200).json({
-            success: true,
-            message: `시스템 패치 완료! ${selectedTierId} 등급으로 정상 상태가 복구되었습니다.`,
-            newStatus: newState,
-            nextActionGuide: "진단 리포트를 다운로드하여 사용 매뉴얼을 숙지하십시오." // 강제 액션 유도
-        });
-
-    } catch (error) {
-        // 예상치 못한 시스템 오류 처리
-        console.error("Unhandled exception during purchase completion:", error);
-        return res.status(500).json({ 
+        // 핵심은 사용자가 '내 실수'가 아닌 '시스템의 구조적 결함'으로 느끼게 하는 것입니다.
+        return { 
             success: false, 
-            errorCode: "SYSTEM-CRASH",
-            message: "알 수 없는 치명적인 시스템 변칙성이 감지되었습니다." // 최상위 경고톤 유지
-        });
+            message: `🚨 시스템 오류 발생 (AUTH-STRUC): 요청 처리에 실패했습니다. 원인 추정: ${error.message}. 저희는 구조적인 무결성 문제를 진단해야 합니다.` 
+        };
     }
 };
 
-// 상태 전이 서비스는 임포트된 것으로 가정하고 구현은 제외합니다.
-// const UserStateService = require('../services/userStateService');
+/**
+ * 무료 사용자 진단 점수 확인 엔드포인트 (GET /api/v1/diagnose)
+ */
+export const checkDiagnosis = async (userId: string, scanResults: any[]): Promise<{ requiresUpgrade: boolean; score: number }> => {
+    return await checkDiagnosisScore(userId, scanResults);
+};

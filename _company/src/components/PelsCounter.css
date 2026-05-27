@@ -1,0 +1,63 @@
+/* 💡 PELS Counter: 네온 글리치 미학 적용 */
+
+/* 기본 컨테이너 스타일 및 애니메이션 설정 */
+.pels-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    margin: 40px auto;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.3); /* 기본 글리치 배경 */
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* 과장된 트랜지션 */
+}
+
+/* --- 🔴 상태별 스타일링 (가장 중요) --- */
+
+/* 1. NORMAL STATE: 시스템이 잠잠한 듯 보이지만 경계를 유지 */
+.status-normal {
+    background-color: rgba(13, 13, 13, 0.8); /* #0D0D0D */
+    border: 2px solid #00FFFF; /* 사이언 블루 테두리 */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+/* 2. WARNING STATE: 긴장감이 고조되는 상태 (네온 레드 강조) */
+.status-warning {
+    background-color: rgba(40, 13, 13, 0.9); /* 어두운 적색 배경 */
+    border: 2px solid #FF0033; /* 네온 레드로 경고 라인 */
+    box-shadow: 0 0 35px rgba(255, 0, 51, 0.6); /* 강한 레드 글리치 효과 */
+}
+
+/* 3. CRITICAL STATE: 시스템 다운 직전의 공포감 조성 (가장 강력함) */
+.status-critical {
+    background-color: rgba(8, 2, 2, 1); /* 거의 검은색에 가까운 배경 */
+    border: 4px solid #FF0033; 
+    box-shadow: 0 0 50px rgba(255, 0, 51, 1), inset 0 0 20px rgba(255, 0, 51, 0.8); /* 이중 레드 글리치 */
+    animation: critical-flash 1s infinite alternate; /* 깜빡임 애니메이션 */
+}
+
+/* --- 일반 요소 스타일링 --- */
+.pels-core h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #FFFFFF;
+    letter-spacing: -2px;
+}
+
+/* @keyframes로 글리치 효과를 모방 */
+@keyframes critical-flash {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0.95; transform: scale(1.01) translateY(-1px); box-shadow: 0 0 60px rgba(255, 0, 51, 1), inset 0 0 30px rgba(255, 0, 51, 0.9); }
+}
+
+/* 로딩/에러 상태 스타일 */
+.loading {
+    color: #FFFF00; /* 노란색으로 경고 표시 */
+    font-size: 1.2rem;
+}
+.error {
+    color: #FF3333;
+}

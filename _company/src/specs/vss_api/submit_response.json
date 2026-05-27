@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "jobId": {"type": "string", "description": "시스템이 할당한 고유 작업 ID."},
+    "status": {"type": "string", "enum": ["QUEUED"], "description": "현재 작업 상태 (대기열에 진입함)."},
+    "estimatedCompletionTime": {"type": "string", "format": "datetime", "description": "예상 완료 시간."}
+  },
+  "required": ["jobId", "status"]
+}

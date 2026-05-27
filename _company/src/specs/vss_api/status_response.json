@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "jobId": {"type": "string"},
+    "status": {"type": "string", "enum": ["QUEUED", "PROCESSING", "COMPLETED", "FAILED"], "description": "현재 작업 상태."},
+    "progressPercentage": {"type": "integer", "minimum": 0, "maximum": 100},
+    "message": {"type": "string", "nullable": true, "description": "진행 상황 설명 메시지 (예: '서명 검증 단계 진행 중')."},
+    "resultUrl": {"type": "string", "format": "url", "nullable": true, "description": "작업이 성공적으로 완료되었을 때의 결과물 URL."}
+  },
+  "required": ["jobId", "status"]
+}

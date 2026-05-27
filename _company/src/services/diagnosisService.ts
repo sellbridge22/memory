@@ -1,155 +1,139 @@
 /**
- * @fileoverview Diagnosis State Transition Service Layer (Core Business Logic)
- * 진단 기록의 상태 변화를 시스템 레벨에서 강제하는 핵심 로직.
- * 외부 API 호출은 이 서비스 레이어를 통과해야 함.
+ * @fileoverview VSS (Validation & Safety System)의 핵심 진단 상태 전이 로직 모킹 서비스.
+ * 모든 트랜잭션은 시스템적 결함 해결 경험을 기술적으로 강제하는 것이 목표입니다.
  */
 
-// --- [1] 타입 정의 및 상수 설정 ---
+// ========================================
+// 1. STATE MACHINE DEFINITION
+// ========================================
 
-/** 
- * 모든 가능한 Diagnosis Record의 상태(State) 목록.
- * '상태 전이'가 일어나는 지점을 명확히 합니다.
+/**
+ * 사용자 계정의 현재 상태를 정의합니다. (State Machine)
+ * S0: Initial State - 진단 전.
+ * S1: Diagnosis Completed - 무료 진단을 완료했으나, 결함이 경미하여 패치 불필요.
+ * S2: PRO Kit Required - 구조적 취약점(Structural Vulnerability) 감지. PRO Kit 필수 구매 상태.
+ * S3: Enterprise Locked - 엔터프라이즈급 시스템 교체 필요 (최상위 유료 단계).
  */
-export enum DiagnosisStatus {
-    INITIAL = "NEW_RECORD",      // 초기 진단 데이터 입력 직후 (최소 단계)
-    DIAGNOSED = "ANALYSIS_COMPLETE", // 분석 완료, 위험 경고 표시 (진단 리포트 노출)
-    REQUIRED_PATCH = "CRITICAL_DEFECT_FOUND", // 결함 발견, 패치 구매 강제 유도
-    PAYMENT_PENDING = "WAITING_FOR_TRANSACTION", // 결제 대기 상태
-    COMPLETED = "SYSTEM_CLEANSED"  // 최종 완료 및 시스템 정상화
+export enum UserState {
+    S0_INITIAL = "S0", // 초기 진단 전 상태
+    S1_SAFE = "S1",    // 안전한 상태 (패치 불필요)
+    S2_VULNERABLE = "S2",// 취약 상태 (PRO Kit 필요)
+    S3_CRITICAL_LOCK = "S3" // 치명적 결함, 전면 시스템 교체 권고
 }
 
-/** 
- * API 호출 시 필요한 Request Body의 인터페이스.
+/**
+ * 진단 결과 구조체.
  */
-export interface TransitionInput {
-    currentRecord: {
-        id: string;
-        status: DiagnosisStatus;
-        data: any; // 진단 결과 데이터 (점수, 결함 리스트 등)
-    };
-    transitionPayload: {
-        type: 'DIAGNOSTIC' | 'PAYMENT_SUCCESS' | 'MANUAL_UPDATE';
-        payload?: Record<string, any>; // 전이 시 필요한 추가 데이터 (예: 결제 ID, 패치 버전)
-    }
+export interface ScanResults {
+    scanId: string;
+    defectCode: string; // 예: AUTH-STRUC, DATA-MISMATCH 등
+    severityLevel: 'LOW' | 'MEDIUM' | 'HIGH';
+    description: string;
 }
 
-/** 
- * API 응답의 인터페이스. 성공/실패 여부를 명확히 합니다.
+/**
+ * 진단 요청 본문 (Request Body Definition)
  */
-export interface TransitionOutput {
+export interface DiagnosisRequest {
+    email: string; // 필수 필드
+    jobSector: string; // 운영 부문 정보 (Operational Sector)
+    scanResults: ScanResults[]; // 핵심 데이터 배열
+    timestamp: string;
+}
+
+/**
+ * 진단 응답 본문 (Response Body Definition)
+ */
+export interface DiagnosisResponse {
     success: boolean;
-    newStatus: DiagnosisStatus | null;
-    message: string; // 사용자에게 보여줄 메시지 (경고톤 유지)
-    updatedRecord?: any; // 상태 변경 후의 전체 레코드 데이터
-}
-
-
-// --- [2] 핵심 로직 구현: State Machine Engine ---
-
-/** 
- * 주어진 진단 기록과 전이 페이로드를 기반으로 다음 상태를 결정하고,
- * 유효하지 않은 전이는 시스템 에러로 강제 거부합니다. (가장 높은 우선순위)
- * @param input TransitionInput - 현재 기록 및 요청 정보
- * @returns TransitionOutput - 새로운 상태와 메시지
- */
-export function transitionDiagnosisState(input: TransitionInput): TransitionOutput {
-    const { currentRecord, transitionPayload } = input;
-    const currentState = currentRecord.status;
-
-    let nextStatus: DiagnosisStatus | null = null;
-    let message: string = "";
-    let success = false;
-
-    try {
-        switch (currentState) {
-            case DiagnosisStatus.INITIAL:
-                if (transitionPayload.type === 'DIAGNOSTIC') {
-                    // 1단계: 초기 진단 -> 분석 완료 상태 전이 로직
-                    const defectCount = Object.keys(currentRecord.data).filter(key => currentRecord.data[key] === 'DEFECT').length;
-                    if (defectCount > 0) {
-                        nextStatus = DiagnosisStatus.REQUIRED_PATCH; // 결함 발견 시 바로 강제 전이
-                        message = `🚨 [경고 코드: AUTH-STRUC] 치명적인 시스템 변칙성 ${defectCount}건을 감지했습니다. 패치가 필수입니다.`;
-                    } else {
-                        nextStatus = DiagnosisStatus.DIAGNOSED; // 결함 없음, 일단 진단 완료로 처리
-                        message = "✅ 구조적 결함을 확인하지 못했지만, 추가 분석이 필요합니다.";
-                    }
-                } else {
-                    // 유효하지 않은 전이 시도 (예: 초기 상태에서 바로 결제 요청)
-                    throw new Error("Invalid State Transition Attempt. 다음 단계로 진입하기 위한 필수 진단 과정을 먼저 거쳐야 합니다.");
-                }
-                break;
-
-            case DiagnosisStatus.REQUIRED_PATCH:
-                if (transitionPayload.type === 'PAYMENT_SUCCESS') {
-                    // 2단계: 결제 완료 -> 대기 상태 전이 로직
-                    nextStatus = DiagnosisStatus.PAYMENT_PENDING;
-                    message = `⚙️ 패치 프로세스가 시작되었습니다. 시스템 재구축에 시간이 필요합니다.`;
-                } else {
-                     throw new Error("Payment must be successful to proceed. Please complete the transaction via the secured gateway.");
-                }
-                break;
-
-            case DiagnosisStatus.PAYMENT_PENDING:
-                 if (transitionPayload.type === 'MANUAL_UPDATE' && transitionPayload.payload?.success) {
-                    // 3단계: 시스템 패치 완료 -> 최종 정상화 상태 전이 로직
-                    nextStatus = DiagnosisStatus.COMPLETED;
-                    message = "✨ 모든 구조적 결함이 수정되었으며, 시스템은 안정화되었습니다.";
-                } else if (transitionPayload.type !== 'MANUAL_UPDATE') {
-                     throw new Error("Invalid Action: Only manual confirmation can advance the state from PENDING.");
-                 }
-                break;
-
-            case DiagnosisStatus.DIAGNOSED | DiagnosisStatus.COMPLETED:
-                // 이미 끝난 상태에서 무리한 전이를 시도하는 경우 (예외 처리)
-                throw new Error(`System State Lockout: Current status (${currentState}) prevents further transitions.`);
-        }
-
-        if (nextStatus && nextStatus !== currentState) {
-            success = true;
-            message += `\n[INFO] 성공적으로 '${DiagnosisStatus[Object.keys(DiagnosisStatus).find(key => DiagnosisStatus[key] === nextStatus)]}' 상태로 전이합니다.`;
-        }
-
-    } catch (e: any) {
-        // 🚨 시스템 레벨 예외 처리 블록 (가장 중요)
-        success = false;
-        const errorMsg = e.message || "Unknown System Error.";
-        if (!errorMsg.includes("Invalid State Transition Attempt") && !errorMsg.includes("System State Lockout")) {
-            // 우리가 정의한 경고 톤을 유지하며 에러 메시지 재구성
-            return { success: false, newStatus: null, message: `🛑 [ERROR CODE: ${Math.floor(Math.random() * 1000)}] 시스템 오류 발생. 원인: 구조적 전이 경로가 유효하지 않습니다. 상세 내용: ${errorMsg}` };
-        } else {
-            return { success: false, newStatus: null, message: `🛑 [SYSTEM FAILURE] ${errorMsg}` };
-        }
-    }
-
-    // 최종 성공 반환 구조체 구성
-    const updatedRecord = { ...currentRecord, status: nextStatus || currentState, data: currentRecord.data };
-
-    return { 
-        success: success, 
-        newStatus: nextStatus, 
-        message: message, 
-        updatedRecord: updatedRecord 
+    message: string;
+    userState: UserState;      // 업데이트된 최종 사용자 상태
+    requiredAction: 'NONE' | 'PRO_KIT_PURCHASE' | 'ENTERPRISE_CONSULT'; // 필수 행동 유도
+    payload: {
+        statusDetails?: string;
+        warningCode?: string;
+        ctaMessage?: string;
     };
 }
 
-// --- [3] 예시 사용법 및 테스트 (테스트 코드를 주석 처리) ---
-/*
-const initialData = { id: "user-123", status: DiagnosisStatus.INITIAL, data: { A: 'OK', B: 'DEFECT' } };
+// ========================================
+// 2. CORE LOGIC IMPLEMENTATION (MOCK API)
+// ========================================
 
-console.log("--- 🧪 Test Case 1: 정상적인 결함 발견 -> 전이 시도 ---");
-let result1 = transitionDiagnosisState({ currentRecord: initialData, transitionPayload: { type: 'DIAGNOSTIC' } });
-// console.log(result1); // 예상: REQUIRED_PATCH로 성공
+/**
+ * 진단 요청을 처리하고 사용자 상태 전이를 강제하는 모킹 서비스입니다.
+ * @param request - 클라이언트가 제출한 진단 요청 데이터.
+ * @returns State Transition에 따른 구조화된 응답 객체.
+ */
+export const diagnoseSystem = (request: DiagnosisRequest): DiagnosisResponse => {
+    console.log(`[VSS DIAGNOSIS START] Processing diagnosis for ${request.email} in sector ${request.jobSector}`);
 
-console.log("\n--- 🧪 Test Case 2: 초기 상태에서 결제 요청 시도 (실패 예시) ---");
-let result2 = transitionDiagnosisState({ currentRecord: initialData, transitionPayload: { type: 'PAYMENT_SUCCESS' } });
-// console.log(result2); // 예상: 시스템 에러 코드 반환
+    // 1. Input Validation & Initial State Check
+    if (!request.email || !request.scanResults?.length) {
+        return {
+            success: false,
+            message: "Input validation failed. Please provide required log data.",
+            userState: UserState.S0_INITIAL,
+            requiredAction: 'NONE',
+            payload: {}
+        };
+    }
 
-console.log("\n--- 🧪 Test Case 3: 이미 완료된 상태에서 진단 시도 (실패 예시) ---");
-let finishedData = { id: "user-124", status: DiagnosisStatus.COMPLETED, data: {} };
-let result3 = transitionDiagnosisState({ currentRecord: finishedData, transitionPayload: { type: 'DIAGNOSTIC' } });
-// console.log(result3); // 예상: System State Lockout 에러 반환
-*/
+    // 2. Structural Vulnerability Assessment (핵심 비즈니스 로직)
+    let hasCriticalDefect = false;
+    const highSeverityCount = request.scanResults.filter(r => r.severityLevel === 'HIGH').length;
 
-export default {
-    transitionDiagnosisState
+    if (highSeverityCount >= 1 || request.scanResults.some(r => r.defectCode.includes('AUTH-STRUC'))) {
+        hasCriticalDefect = true;
+    }
+
+    let newState: UserState;
+    let requiredAction: 'NONE' | 'PRO_KIT_PURCHASE' | 'ENTERPRISE_CONSULT';
+    let message: string;
+
+    // 3. State Transition Logic (가장 중요한 부분)
+    if (hasCriticalDefect) {
+        // Critical Defect 감지 -> PRO Kit 구매 유도 (S2)
+        newState = UserState.S2_VULNERABLE;
+        requiredAction = 'PRO_KIT_PURCHASE';
+        message = `🚨 CRITICAL ALERT: ${request.scanResults[0].defectCode} 구조적 결함이 감지되었습니다. 즉시 패치가 필요합니다.`; // 경고 메시지 강제 출력 [근거: 지난 의사결정 로그]
+
+    } else if (highSeverityCount > 0) {
+        // Medium Defect 감지 -> 모니터링/추가 데이터 요구 (S1 유지 또는 약간 상승)
+        newState = UserState.S1_SAFE;
+        requiredAction = 'NONE'; // 일단은 무료 진단으로 끝내고, 다음 단계에서 추가 데이터를 요청할 수 있음.
+        message = `⚠️ WARNING: 경미한 취약점 ${request.scanResults[0].defectCode}가 감지되었습니다. 현재는 시스템 운영에 지장이 없으나 정기 모니터링이 필요합니다.`;
+
+    } else {
+        // Clean Slate -> 안전 (S1)
+        newState = UserState.S1_SAFE;
+        requiredAction = 'NONE';
+        message = "✅ System Check Passed. 현재 시스템은 구조적 결함 없이 안정적으로 운영되고 있습니다.";
+    }
+
+    console.log(`[VSS DIAGNOSIS END] State transitioned to ${Object.values(UserState).find(s => s === newState)}.`);
+
+
+    // 4. Final Response Payload Construction
+    return {
+        success: true,
+        message: message,
+        userState: newState,
+        requiredAction: requiredAction,
+        payload: {
+            statusDetails: `Defect Scan Count: ${request.scanResults.length}, High Severity: ${highSeverityCount}`,
+            warningCode: hasCriticalDefect ? 'AUTH-STRUC' : undefined,
+            ctaMessage: requiredAction === 'PRO_KIT_PURCHASE' 
+                ? "즉시 PRO Kit 패치를 적용하여 시스템의 구조적 무결성을 확보하십시오." 
+                : (requiredAction === 'NONE' ? "다음 정기 진단 시기를 예약하세요." : "전문가 상담이 필요합니다.")
+        }
+    };
+};
+
+// ========================================
+// EXPORT FOR TESTING/INTEGRATION
+// ========================================
+export const diagnoseService = {
+    diagnose: diagnoseSystem,
+    states: UserState // 상태 열거형도 외부에 노출
 };

@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "userId": {"type": "string", "description": "JWT에서 추출된 사용자 고유 ID."},
+    "signatureMetadata": {
+      "type": "object",
+      "description": "진단 및 서명에 사용되는 메타데이터 (예: 전문 용어, 결함 유형)."},
+    "videoFileUrl": {"type": "string", "format": "url", "description": "S3 등 클라우드 스토리지에 업로드된 원본 비디오 파일 URL."},
+    "processingType": {
+      "type": "string", 
+      "enum": ["BASIC_AUTH", "CRITICAL_DEFECT"], 
+      "description": "처리 강도 지정 (Critical Defect는 고사양 워커 할당)."
+    }
+  },
+  "required": ["userId", "signatureMetadata", "videoFileUrl"]
+}
